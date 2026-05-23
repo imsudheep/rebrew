@@ -62,7 +62,7 @@
 
     // Pad file names to match ezgif-frame-XXX.jpg format
     const getFramePath = (idx) => {
-        return `Assets/ezgif-frame-${String(idx).padStart(3, '0')}.jpg`;
+        return `assets/ezgif-frame-${String(idx).padStart(3, '0')}.jpg`;
     };
 
     // 2. CRITICAL PRELOAD PIPELINE (Sequential & Dynamic Decoding)
