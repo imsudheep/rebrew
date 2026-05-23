@@ -7,17 +7,18 @@
     'use strict';
 
     // 1. CONFIGURATION & STATE
-    const TOTAL_ORIGINAL_FRAMES = 192;
-    const FRAME_STEP = 2; // Downsamples sequence to 96 frames for optimal RAM, speed & smooth render
+    const START_FRAME = 33;
+    const END_FRAME = 240;
+    const FRAME_STEP = 1; // Loads all active frames for full density
     const MANUAL_BG_COLOR = '#f5f5f2'; // Exact match background token
 
-    // Generate active frames array based on FRAME_STEP (always include final frame)
+    // Generate active frames array based on START_FRAME, END_FRAME, and FRAME_STEP
     const activeFrames = [];
-    for (let i = 1; i <= TOTAL_ORIGINAL_FRAMES; i += FRAME_STEP) {
+    for (let i = START_FRAME; i <= END_FRAME; i += FRAME_STEP) {
         activeFrames.push(i);
     }
-    if (activeFrames[activeFrames.length - 1] !== TOTAL_ORIGINAL_FRAMES) {
-        activeFrames.push(TOTAL_ORIGINAL_FRAMES);
+    if (activeFrames[activeFrames.length - 1] !== END_FRAME) {
+        activeFrames.push(END_FRAME);
     }
 
     const CRITICAL_LOAD_COUNT = 20; // First 20 active frames load immediately to unblock view
@@ -26,16 +27,23 @@
 
     // Cache to hold successfully loaded and decoded HTMLImageElements
     const loadedImages = {};
+    let fallbackCache = {}; // O(1) cache to prevent CPU search bottlenecks inside renderLoop
 
     // DOM Elements
     const canvas = document.getElementById('scrolly-canvas');
     const ctx = canvas.getContext('2d');
+
+    // High-performance off-screen double-buffering canvas to eliminate GPU texture upload stutters
+    const offscreenCanvas = document.createElement('canvas');
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+
     const preloader = document.getElementById('preloader');
     const preloaderPercent = document.getElementById('preloader-percent');
     const preloaderBar = document.getElementById('preloader-bar');
     const headerNav = document.querySelector('.header-nav');
     const scrollIndicator = document.getElementById('scroll-indicator');
     const storyPanels = document.querySelectorAll('.story-panel');
+    const heroContainer = document.getElementById('hero-scrollytelling');
 
     // Scroll Physics & Interpolation States
     let targetScrollProgress = 0;
@@ -74,6 +82,7 @@
 
                 await img.decode();
                 loadedImages[frameId] = img;
+                fallbackCache = {}; // Invalidate fallback cache on new load
             } catch (err) {
                 console.warn(`Error caching critical frame ${frameId}:`, err);
             } finally {
@@ -107,6 +116,9 @@
 
         // Begin background streaming using browser idle slots
         initProgressiveBackgroundLoader();
+
+        // Initialize scroll reveal triggers for lower editorial sections
+        initScrollReveal();
     }
 
     // 3. PROGRESSIVE IDLE BACKGROUND LOADER
@@ -136,6 +148,7 @@
                     // Decode off-thread
                     await img.decode();
                     loadedImages[frameId] = img;
+                    fallbackCache = {}; // Invalidate fallback cache on new load
                 } catch (err) {
                     // Fail silently, nearest fallback scanner will cover failures
                 }
@@ -151,6 +164,7 @@
     // 4. NEAREST LOADED FRAME FALLBACK SEARCHER
     function getNearestDecodedFrame(targetId) {
         if (loadedImages[targetId]) return loadedImages[targetId];
+        if (fallbackCache[targetId]) return fallbackCache[targetId];
 
         // Search outward in alternate directions to locate nearest completed texture
         const baseIndex = activeFrames.indexOf(targetId);
@@ -160,12 +174,18 @@
             // Check previous frame index
             if (baseIndex - offset >= 0) {
                 const prevId = activeFrames[baseIndex - offset];
-                if (loadedImages[prevId]) return loadedImages[prevId];
+                if (loadedImages[prevId]) {
+                    fallbackCache[targetId] = loadedImages[prevId];
+                    return loadedImages[prevId];
+                }
             }
             // Check next frame index
             if (baseIndex + offset < activeFrames.length) {
                 const nextId = activeFrames[baseIndex + offset];
-                if (loadedImages[nextId]) return loadedImages[nextId];
+                if (loadedImages[nextId]) {
+                    fallbackCache[targetId] = loadedImages[nextId];
+                    return loadedImages[nextId];
+                }
             }
             offset++;
         }
@@ -199,10 +219,13 @@
             drawY = 0;
         }
 
-        // Draw texture cleared perfectly using manual background hex
-        ctx.fillStyle = MANUAL_BG_COLOR;
-        ctx.fillRect(0, 0, cachedCanvasWidth, cachedCanvasHeight);
-        ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+        // 1. Draw texture cleared perfectly onto memory-based offscreen canvas
+        offscreenCtx.fillStyle = MANUAL_BG_COLOR;
+        offscreenCtx.fillRect(0, 0, cachedCanvasWidth, cachedCanvasHeight);
+        offscreenCtx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+
+        // 2. Perform zero-latency blit stamp onto visible display canvas (GPU optimized)
+        ctx.drawImage(offscreenCanvas, 0, 0);
     }
 
     // 6. DEBOUNCED RESIZE SYNCHRONIZATION
@@ -221,8 +244,13 @@
         canvas.style.width = `${rect.width}px`;
         canvas.style.height = `${rect.height}px`;
 
+        // Match memory canvas buffer size with visual dimensions
+        offscreenCanvas.width = cachedCanvasWidth;
+        offscreenCanvas.height = cachedCanvasHeight;
+
         // Scale drawing context by pixel ratio to guarantee Retina crispness
         ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transformations
+        offscreenCtx.setTransform(1, 0, 0, 1, 0, 0); // Synchronize memory context
         
         // Immediate repaint to preserve visual stability
         forceRepaint();
@@ -245,12 +273,12 @@
     // 7. SCROLL SYNCHRONIZED INTERPOLATION LOOP
     function updateScrollState() {
         const scrollY = window.scrollY;
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const maxHeroScroll = heroContainer.offsetHeight - window.innerHeight;
         
-        if (maxScroll <= 0) {
+        if (maxHeroScroll <= 0) {
             targetScrollProgress = 0;
         } else {
-            targetScrollProgress = Math.max(0, Math.min(1, scrollY / maxScroll));
+            targetScrollProgress = Math.max(0, Math.min(1, scrollY / maxHeroScroll));
         }
 
         // Apple-style Glassmorphism Nav Toggle on scroll offset
@@ -359,6 +387,28 @@
                 panel.style.pointerEvents = 'none';
             }
         });
+    }
+
+    // 9. HIGH-PERFORMANCE INTERSECTIONOBSERVER SCROLL-REVEAL ENGINE
+    function initScrollReveal() {
+        const revealElements = document.querySelectorAll('.reveal-up');
+        
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px 0px -100px 0px', // trigger slightly prior to fully entering screen
+            threshold: 0.15 // 15% visibility trigger
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Unobserve once animated
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => observer.observe(el));
     }
 
     // Initialize Core Process

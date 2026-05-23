@@ -45,8 +45,8 @@
             <a href="#" class="brand-logo" id="nav-logo">REBREW</a>
             
             <nav class="nav-menu">
-                <a href="#story" class="nav-link">Story</a>
-                <a href="#flavor" class="nav-link">Flavor</a>
+                <a href="#hero-scrollytelling" class="nav-link">Reveal</a>
+                <a href="#flavors" class="nav-link">Flavors</a>
                 <a href="#crafted" class="nav-link">Crafted</a>
                 <a href="#experience" class="nav-link">Experience</a>
             </nav>
@@ -57,8 +57,8 @@
         </div>
     </header>
 
-    <!-- Master Scrollytelling Scroll Area -->
-    <main id="scrollytelling-container">
+    <!-- Section 1: Pinned Hero Cinematic (0% to 100% scroll progress over 300vh) -->
+    <main id="hero-scrollytelling">
         
         <!-- Sticky Wrapper containing the Canvas and Absolute Overlays -->
         <div class="sticky-viewport">
@@ -66,43 +66,14 @@
             <!-- Dynamic Hardware-Accelerated Canvas -->
             <canvas id="scrolly-canvas"></canvas>
             
-            <!-- Section Copy Panels (Controlled via Scroll Interpolation) -->
-            
-            <!-- PANEL 1: Intro / Empty Space (0% - 20%) -->
-            <section class="story-panel" id="panel-intro" data-start="0" data-end="20">
-                <div class="panel-inner text-left">
-                    <span class="editorial-label">Introduction</span>
-                    <h2 class="editorial-title">Every bottle begins<br>with a feeling.</h2>
-                    <p class="editorial-desc">Crafted slowly. Designed to linger. An invitation to appreciate the beauty of deliberate patience.</p>
-                </div>
-            </section>
-            
-            <!-- PANEL 2: Flavor Formation (20% - 45%) -->
-            <section class="story-panel" id="panel-flavor" data-start="20" data-end="45">
-                <div class="panel-inner text-right">
-                    <span class="editorial-label">Structure</span>
-                    <h2 class="editorial-title">Flavor takes<br>shape.</h2>
-                    <p class="editorial-desc">Real fruit. Real texture. Real character. Watch the elements align into perfect suspension.</p>
-                </div>
-            </section>
-            
-            <!-- PANEL 3: Product Materialization (45% - 70%) -->
-            <section class="story-panel" id="panel-reveal" data-start="45" data-end="70">
-                <div class="panel-inner text-left">
-                    <span class="editorial-label">Alchemy</span>
-                    <h2 class="editorial-title">Every bottle has<br>its own story.</h2>
-                    <p class="editorial-desc">Handcrafted fruit brew designed for slow moments, wrapping authentic liquid motion around custom architecture.</p>
-                </div>
-            </section>
-            
-            <!-- PANEL 4: Final Hero Composition (70% - 100%) -->
+            <!-- PANEL: Final Hero Composition (70% - 100% scroll progress) -->
             <section class="story-panel" id="panel-hero" data-start="70" data-end="100">
                 <div class="panel-inner text-center">
                     <span class="editorial-label">The Release</span>
                     <h1 class="hero-brand-title">REBREW</h1>
                     <p class="hero-brand-subtitle">Timeless flavor, bottled beautifully.</p>
                     <div class="hero-cta-wrapper">
-                        <a href="#explore" class="hero-cta-btn">Explore the Experience</a>
+                        <a href="#flavors" class="hero-cta-btn">Explore the Experience</a>
                     </div>
                 </div>
             </section>
@@ -118,6 +89,137 @@
         </div>
         
     </main>
+
+    <!-- Section 2: The Flavor Gallery (Interactive Glassmorphic Grid Showroom) -->
+    <section id="flavors" class="reveal-section">
+        <div class="section-container">
+            <div class="section-header text-center reveal-up">
+                <span class="section-subtitle-badge">The Collections</span>
+                <h2 class="section-main-title">Select Your Profile</h2>
+                <p class="section-desc-para">Three slow-crafted profiles, designed to satisfy the conscious palate.</p>
+            </div>
+            
+            <div class="flavors-grid">
+                
+                <!-- CARD 1: Noble Grape -->
+                <div class="flavor-card reveal-up" id="card-noble">
+                    <div class="card-glass-glow"></div>
+                    <div class="card-content">
+                        <span class="flavor-type-badge type-noble">Noble Grape</span>
+                        <h3 class="flavor-card-title">Classic Velvet</h3>
+                        <p class="flavor-card-desc">Dark plum, sweet black cherry, and a subtle undertone of toasted oak. Bold, heavy, and structured.</p>
+                        
+                        <div class="flavor-card-divider"></div>
+                        <ul class="flavor-card-stats">
+                            <li><span>Sweetness</span><strong>Medium-Dry</strong></li>
+                            <li><span>Acidity</span><strong>Very Soft</strong></li>
+                            <li><span>Body</span><strong>Full & Rich</strong></li>
+                        </ul>
+                        
+                        <a href="#explore-noble" class="card-cta-btn">Explore Profile</a>
+                    </div>
+                </div>
+                
+                <!-- CARD 2: Royal Splash -->
+                <div class="flavor-card reveal-up" id="card-royal">
+                    <div class="card-glass-glow"></div>
+                    <div class="card-content">
+                        <span class="flavor-type-badge type-royal">Royal Splash</span>
+                        <h3 class="flavor-card-title">Effervescent Zest</h3>
+                        <p class="flavor-card-desc">Vibrant white grape, carbonated citrus oil, and cooling botanical extracts. Crisp, light, and refreshing.</p>
+                        
+                        <div class="flavor-card-divider"></div>
+                        <ul class="flavor-card-stats">
+                            <li><span>Sweetness</span><strong>Lightly Sweet</strong></li>
+                            <li><span>Acidity</span><strong>Crisp & Tart</strong></li>
+                            <li><span>Body</span><strong>Effervescent</strong></li>
+                        </ul>
+                        
+                        <a href="#explore-royal" class="card-cta-btn">Explore Profile</a>
+                    </div>
+                </div>
+                
+                <!-- CARD 3: Limited Reserve -->
+                <div class="flavor-card reveal-up" id="card-reserve">
+                    <div class="card-glass-glow"></div>
+                    <div class="card-content">
+                        <span class="flavor-type-badge type-reserve">Limited Reserve</span>
+                        <h3 class="flavor-card-title">Oak Infusion</h3>
+                        <p class="flavor-card-desc">Charred oak cask aged, notes of wild elderberry, dark cacao nibs, and smooth leather. Rich and meditative.</p>
+                        
+                        <div class="flavor-card-divider"></div>
+                        <ul class="flavor-card-stats">
+                            <li><span>Sweetness</span><strong>Dry</strong></li>
+                            <li><span>Acidity</span><strong>Soft & Balanced</strong></li>
+                            <li><span>Body</span><strong>Intense Depth</strong></li>
+                        </ul>
+                        
+                        <a href="#explore-reserve" class="card-cta-btn">Explore Profile</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: The "Crafted Slowly" Story (Asymmetrical Modern Split-Column) -->
+    <section id="crafted" class="reveal-section">
+        <div class="section-container">
+            <div class="crafted-split-wrapper">
+                
+                <!-- Left: Luxury Photographic Abstract Collage (CSS Art) -->
+                <div class="crafted-visual-collage reveal-up">
+                    <div class="collage-backplane"></div>
+                    <div class="collage-plate plate-main">
+                        <div class="plate-inner-badge">COLD PRESS</div>
+                    </div>
+                    <div class="collage-plate plate-secondary">
+                        <div class="plate-inner-glow"></div>
+                    </div>
+                    <div class="collage-plate plate-tertiary"></div>
+                </div>
+                
+                <!-- Right: Editorial Narrative Content -->
+                <div class="crafted-text-content reveal-up">
+                    <span class="section-subtitle-badge">The Slow Method</span>
+                    <h2 class="editorial-crafted-title">Deliberate patience<br>in every drop.</h2>
+                    <p class="editorial-crafted-desc">We do not rush. Every organic grape is hand-harvested at the exact peak of autumn maturity, then cold-pressed within hours to preserve its rich cellular structure.</p>
+                    <p class="editorial-crafted-desc">Our slow cold-brewing process takes twelve full months, allowing the flavor notes to marry naturally in cool stone cellars without chemical preservatives or synthetic additives.</p>
+                    
+                    <!-- High-End Stats Grid Row -->
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <strong>100%</strong>
+                            <span>Organic Grapes</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <strong>12 Mo</strong>
+                            <span>Slow Cask Aged</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <strong>Zero</strong>
+                            <span>Synthetic Additives</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Fullscreen Radially Gradient CTA Experience Banner -->
+    <section id="experience" class="reveal-section text-center">
+        <div class="experience-container reveal-up">
+            <span class="editorial-label">Invitation</span>
+            <h2 class="experience-title">Are you ready<br>to linger?</h2>
+            <p class="experience-subtitle">Request access to the private autumn tasting lists.</p>
+            <div class="experience-btn-wrapper">
+                <a href="#request" class="experience-cta-btn">Request Private Tasting</a>
+            </div>
+        </div>
+    </section>
 
     <!-- Luxury Editorial Footer -->
     <footer class="editorial-footer">
@@ -154,6 +256,6 @@
     </footer>
 
     <!-- High-Performance Script Controller -->
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>

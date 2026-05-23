@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------
  * REBREW Luxury Brand Design System - Stylesheet
- * Crafted with Awwwards-Level Aesthetics, High-End Minimalism,
- * and Premium Apple-Style Product Storytelling.
+ * Restructured with Pinned Hero Cinematic and 3 Stunning Editorial Sections.
+ * Crafted with Awwwards-Level Aesthetics and Premium Apple-Style UI.
  * ------------------------------------------------------------- */
 
 /* Custom CSS Variables & Tokens */
@@ -247,12 +247,12 @@ html, body {
 }
 
 /* -------------------------------------------------------------
- * 3. STICKY CANVAS & MAIN VIEWPORT
+ * 3. STICKY CANVAS & HERO VIEWPORT (Locked at 300vh)
  * ------------------------------------------------------------- */
-#scrollytelling-container {
+#hero-scrollytelling {
     position: relative;
     width: 100%;
-    height: 450vh; /* Controlled scrolling length */
+    height: 300vh; /* Fixed cinematic length */
 }
 
 .sticky-viewport {
@@ -276,7 +276,7 @@ html, body {
 }
 
 /* -------------------------------------------------------------
- * 4. EDITORIAL SCROLL STORYTELLING BEATS
+ * 4. EDITORIAL HERO COMPOSITION OVERLAY (Ends at 100%)
  * ------------------------------------------------------------- */
 .story-panel {
     position: absolute;
@@ -287,7 +287,7 @@ html, body {
     display: flex;
     align-items: center;
     z-index: 5;
-    pointer-events: none; /* Interactive events bypassed unless target button is clicked */
+    pointer-events: none;
     opacity: 0;
     transform: translateY(30px);
     will-change: opacity, transform;
@@ -304,22 +304,7 @@ html, body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 80px;
-    pointer-events: auto; /* Enable link clicks on text overlay */
-}
-
-/* Panel Layout Alignments */
-.text-left {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.text-right {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    pointer-events: auto;
 }
 
 .text-center {
@@ -329,7 +314,7 @@ html, body {
     align-items: center;
 }
 
-/* Copy Elements & Typography Styling */
+/* Typography Styling */
 .editorial-label {
     font-family: var(--font-main);
     font-size: 0.75rem;
@@ -339,25 +324,6 @@ html, body {
     font-weight: 600;
     margin-bottom: 16px;
     opacity: 0.9;
-}
-
-.editorial-title {
-    font-family: var(--font-display);
-    font-size: clamp(34px, 4.5vw, 64px);
-    font-weight: 500;
-    line-height: 1.1;
-    color: var(--title-color);
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-}
-
-.editorial-desc {
-    font-family: var(--font-main);
-    font-size: clamp(16px, 1.2vw, 19px);
-    color: var(--desc-color);
-    line-height: 1.6;
-    max-width: 480px;
-    font-weight: 300;
 }
 
 /* SECTION 4 SPECIFIC - LUXURY REVEAL HERO */
@@ -370,7 +336,7 @@ html, body {
     margin-bottom: 16px;
     line-height: 1;
     text-transform: uppercase;
-    text-indent: 0.18em; /* Centers accurately with letter spacing */
+    text-indent: 0.18em;
 }
 
 .hero-brand-subtitle {
@@ -455,7 +421,432 @@ html, body {
 }
 
 /* -------------------------------------------------------------
- * 6. LUXURY EDITORIAL FOOTER
+ * 6. REVEAL SECTIONS SYSTEM (Shared styles below hero)
+ * ------------------------------------------------------------- */
+.reveal-section {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    background-color: var(--bg-color);
+    padding: 140px 0;
+    overflow: hidden;
+}
+
+.section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px;
+}
+
+.section-header {
+    margin-bottom: 70px;
+}
+
+.section-subtitle-badge {
+    font-family: var(--font-main);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: inline-block;
+}
+
+.section-main-title {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 4.5vw, 56px);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--title-color);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.section-desc-para {
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    color: var(--desc-color);
+    line-height: 1.6;
+    max-width: 500px;
+    font-weight: 300;
+    margin: 0 auto;
+}
+
+/* -------------------------------------------------------------
+ * 7. THE FLAVOR GALLERY SHOWROOM
+ * ------------------------------------------------------------- */
+.flavors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.flavor-card {
+    position: relative;
+    border-radius: 28px;
+    padding: 56px 44px;
+    background: rgba(74, 18, 63, 0.015);
+    border: 1px solid rgba(74, 18, 63, 0.05);
+    overflow: hidden;
+    transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 520px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.card-glass-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(74, 18, 63, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-primary);
+    z-index: 1;
+}
+
+.flavor-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(74, 18, 63, 0.25);
+    box-shadow: 0 30px 60px rgba(74, 18, 63, 0.05);
+}
+
+.flavor-card:hover .card-glass-glow {
+    opacity: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Flavor Badge Types */
+.flavor-type-badge {
+    align-self: flex-start;
+    font-family: var(--font-main);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+}
+
+.flavor-type-badge.type-noble {
+    color: var(--accent-color);
+    border-color: rgba(74, 18, 63, 0.12);
+    background: rgba(74, 18, 63, 0.02);
+}
+
+.flavor-type-badge.type-royal {
+    color: #b8860b;
+    border-color: rgba(184, 134, 11, 0.15);
+    background: rgba(184, 134, 11, 0.03);
+}
+
+.flavor-type-badge.type-reserve {
+    color: #a52a2a;
+    border-color: rgba(165, 42, 42, 0.15);
+    background: rgba(165, 42, 42, 0.03);
+}
+
+.flavor-card-title {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: var(--title-color);
+    margin: 24px 0 16px;
+    letter-spacing: -0.01em;
+}
+
+.flavor-card-desc {
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    color: var(--desc-color);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 24px;
+}
+
+.flavor-card-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
+    width: 100%;
+}
+
+/* Flavor Card Specs */
+.flavor-card-stats {
+    list-style: none;
+    margin-bottom: 36px;
+}
+
+.flavor-card-stats li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
+
+.flavor-card-stats li span {
+    color: var(--desc-color);
+    font-weight: 400;
+}
+
+.flavor-card-stats li strong {
+    color: var(--title-color);
+    font-weight: 500;
+}
+
+.card-cta-btn {
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--title-color);
+    padding: 14px 0;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    background-color: transparent;
+    transition: border var(--transition-primary), background-color var(--transition-primary), color var(--transition-primary);
+}
+
+.flavor-card:hover .card-cta-btn {
+    border-color: var(--accent-color);
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+/* -------------------------------------------------------------
+ * 8. THE "CRAFTED SLOWLY" ASYMMETRICAL STORY SHOWCASE
+ * ------------------------------------------------------------- */
+.crafted-split-wrapper {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* Left: Photography Abstract Collage (CSS Art Representation) */
+.crafted-visual-collage {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.collage-backplane {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 24px;
+    z-index: 1;
+}
+
+.collage-plate {
+    position: absolute;
+    border-radius: 24px;
+    transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+}
+
+.plate-main {
+    width: 60%;
+    height: 70%;
+    background: linear-gradient(135deg, rgba(74, 18, 63, 0.03) 0%, rgba(245, 245, 242, 0.65) 100%);
+    border: 1px solid rgba(74, 18, 63, 0.15);
+    z-index: 3;
+    box-shadow: 0 30px 60px rgba(74, 18, 63, 0.02);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plate-inner-badge {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--accent-color);
+    padding: 10px 20px;
+    border: 1px solid rgba(74, 18, 63, 0.18);
+    border-radius: 30px;
+    background: rgba(245, 245, 242, 0.85);
+}
+
+.plate-secondary {
+    width: 45%;
+    height: 55%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    z-index: 2;
+    top: 10%;
+    left: 8%;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.01);
+}
+
+.plate-tertiary {
+    width: 40%;
+    height: 50%;
+    background: transparent;
+    border: 1px solid rgba(74, 18, 63, 0.08);
+    z-index: 4;
+    bottom: 8%;
+    right: 8%;
+}
+
+.crafted-visual-collage:hover .plate-main {
+    transform: translate(-5px, -5px) scale(1.02);
+    border-color: var(--accent-color);
+}
+
+.crafted-visual-collage:hover .plate-secondary {
+    transform: translate(5px, 5px) scale(0.98);
+}
+
+/* Right: Editorial Narrative Content */
+.crafted-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.editorial-crafted-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.5vw, 48px);
+    font-weight: 500;
+    color: var(--title-color);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.editorial-crafted-desc {
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    color: var(--desc-color);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+    max-width: 520px;
+}
+
+/* Stats Row */
+.stats-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+    align-items: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-item strong {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    line-height: 1;
+}
+
+.stat-item span {
+    font-family: var(--font-main);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--desc-color);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* -------------------------------------------------------------
+ * 9. RADIAL GRADIENT CTA EXPERIENCE BANNER
+ * ------------------------------------------------------------- */
+#experience {
+    padding: 180px 0;
+    background: radial-gradient(circle at center, rgba(74, 18, 63, 0.035) 0%, var(--bg-color) 70%);
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.experience-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.experience-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 84px);
+    font-weight: 500;
+    color: var(--title-color);
+    line-height: 1.1;
+    margin: 24px 0;
+    letter-spacing: -0.02em;
+}
+
+.experience-subtitle {
+    font-family: var(--font-main);
+    font-size: clamp(16px, 1.5vw, 20px);
+    color: var(--desc-color);
+    font-weight: 300;
+    margin-bottom: 48px;
+}
+
+.experience-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.experience-cta-btn {
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--accent-color);
+    background-color: transparent;
+    padding: 16px 40px;
+    border: 1px solid var(--accent-color);
+    border-radius: 30px;
+    transition: background-color var(--transition-primary), color var(--transition-primary), box-shadow var(--transition-primary), transform var(--transition-primary);
+}
+
+.experience-cta-btn:hover {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px var(--accent-glow);
+}
+
+/* -------------------------------------------------------------
+ * 10. LUXURY EDITORIAL FOOTER
  * ------------------------------------------------------------- */
 .editorial-footer {
     position: relative;
@@ -543,7 +934,22 @@ html, body {
 }
 
 /* -------------------------------------------------------------
- * 7. CORE ANIMATIONS
+ * 11. HIGH-PERFORMANCE SCROLL-REVEAL SYSTEM
+ * ------------------------------------------------------------- */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(40px) translate3d(0, 0, 0);
+    will-change: opacity, transform;
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.reveal-up.active {
+    opacity: 1;
+    transform: translateY(0) translate3d(0, 0, 0);
+}
+
+/* -------------------------------------------------------------
+ * 12. CORE KEYFRAME ANIMATIONS
  * ------------------------------------------------------------- */
 @keyframes reveal-logo {
     to {
@@ -571,20 +977,18 @@ html, body {
 }
 
 /* -------------------------------------------------------------
- * 8. RESPONSIVE MEDIA QUERIES
+ * 13. MASTER RESPONSIVE MEDIA QUERIES
  * ------------------------------------------------------------- */
-@media (max-width: 1024px) {
-    .header-nav, .header-nav.scrolled {
-        padding: 20px 32px;
+@media (max-width: 1200px) {
+    .flavors-grid {
+        gap: 24px;
     }
-    .panel-inner {
-        padding: 0 40px;
+    .flavor-card {
+        padding: 44px 32px;
+        min-height: 480px;
     }
-    .footer-links {
+    .crafted-split-wrapper {
         gap: 40px;
-    }
-    .editorial-footer {
-        padding: 80px 40px 30px;
     }
 }
 
@@ -596,7 +1000,7 @@ html, body {
         padding: 12px 24px;
     }
     .nav-menu {
-        display: none; /* Apple-style layout simplification for narrow screens */
+        display: none; /* Mobile navigation simplification */
     }
     .brand-logo {
         font-size: 1.2rem;
@@ -618,14 +1022,7 @@ html, body {
         text-align: center;
         align-items: center;
     }
-    .editorial-title {
-        font-size: clamp(24px, 5vw, 36px);
-        margin-bottom: 16px;
-    }
-    .editorial-desc {
-        font-size: 0.95rem;
-        max-width: 100%;
-    }
+    
     .hero-brand-title {
         font-size: clamp(48px, 12vw, 84px);
         margin-bottom: 12px;
@@ -635,6 +1032,50 @@ html, body {
         margin-bottom: 30px;
     }
     
+    /* Showroom Responsive Refit */
+    .reveal-section {
+        padding: 80px 0;
+    }
+    .section-container {
+        padding: 0 24px;
+    }
+    .flavors-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 40px;
+    }
+    .flavor-card {
+        min-height: auto;
+        padding: 40px 24px;
+        border-radius: 20px;
+    }
+    
+    /* Split Story Responsive Refit */
+    .crafted-split-wrapper {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+    .crafted-visual-collage {
+        height: 380px;
+    }
+    .crafted-text-content {
+        align-items: center;
+        text-align: center;
+    }
+    .stats-row {
+        justify-content: center;
+        gap: 24px;
+        width: 100%;
+        margin-top: 36px;
+    }
+    .stat-item strong {
+        font-size: 1.8rem;
+    }
+    .stat-item span {
+        font-size: 0.65rem;
+    }
+    
+    /* Footer Refit */
     .footer-container {
         flex-direction: column;
         gap: 48px;
@@ -650,6 +1091,9 @@ html, body {
         gap: 16px;
         text-align: center;
     }
+    .editorial-footer {
+        padding: 80px 24px 30px;
+    }
 }
 
 /* Elite Mobile Landscape Optimization: prevents product collision in short viewports */
@@ -660,12 +1104,6 @@ html, body {
     }
     
     /* Pull copy content to left/right margins to frame the central bottle composition */
-    #panel-intro, #panel-reveal {
-        justify-content: flex-start !important;
-    }
-    #panel-flavor {
-        justify-content: flex-end !important;
-    }
     #panel-hero {
         justify-content: center !important;
     }
@@ -674,30 +1112,7 @@ html, body {
         max-width: 420px !important;
         padding: 0 48px !important;
     }
-    
-    .panel-inner.text-left, .panel-inner.text-right {
-        text-align: left !important;
-        align-items: flex-start !important;
-    }
-    
-    .panel-inner.text-right {
-        text-align: right !important;
-        align-items: flex-end !important;
-    }
 
-    .editorial-title {
-        font-size: 1.5rem !important;
-        margin-bottom: 10px !important;
-        line-height: 1.2 !important;
-    }
-    .editorial-desc {
-        font-size: 0.85rem !important;
-        line-height: 1.4 !important;
-    }
-    .editorial-label {
-        margin-bottom: 8px !important;
-    }
-    
     .hero-brand-title {
         font-size: 3.5rem !important;
         margin-bottom: 8px !important;
