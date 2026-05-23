@@ -1,0 +1,730 @@
+/* -------------------------------------------------------------
+ * REBREW Luxury Brand Design System - Stylesheet
+ * Crafted with Awwwards-Level Aesthetics, High-End Minimalism,
+ * and Premium Apple-Style Product Storytelling.
+ * ------------------------------------------------------------- */
+
+/* Custom CSS Variables & Tokens */
+:root {
+    --bg-color: #f5f5f2;          /* Exact warm white tone of image sequence */
+    --accent-color: #4A123F;      /* Deep premium wine purple */
+    --accent-glow: rgba(74, 18, 63, 0.1);
+    --title-color: #1d1d1f;       /* Apple Charcoal for text headers */
+    --desc-color: #6e6e73;        /* Soft Gray for secondary copy */
+    
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: 'Outfit', -apple-system, sans-serif;
+    
+    --transition-primary: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-buttery: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset & Base HTML Styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    background-color: var(--bg-color);
+    font-family: var(--font-main);
+    color: var(--title-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: auto; /* Absolute control managed by JS */
+}
+
+/* Hide scrollbar for standard premium presentation but keep it functional */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------------------------------------------------
+ * 1. PREMIUM LOADER OVERLAY
+ * ------------------------------------------------------------- */
+.preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-buttery), visibility var(--transition-buttery);
+}
+
+.preloader-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.preloader-logo {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--accent-color);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: reveal-logo 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+}
+
+.preloader-progress-container {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fade-in-element 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
+}
+
+.preloader-progress-track {
+    width: 100%;
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 1px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.preloader-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-color);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preloader-percentage {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--desc-color);
+    letter-spacing: 0.1em;
+}
+
+.preloader-tagline {
+    font-size: 0.8rem;
+    color: var(--desc-color);
+    letter-spacing: 0.05em;
+    font-weight: 300;
+    opacity: 0;
+    animation: fade-in-element 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.7s;
+}
+
+/* -------------------------------------------------------------
+ * 2. FLOATING APPLE-STYLE HEADER & NAVBAR
+ * ------------------------------------------------------------- */
+.header-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 24px 48px;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: padding var(--transition-primary), background var(--transition-primary), border var(--transition-primary);
+}
+
+.header-nav.scrolled {
+    padding: 16px 48px;
+    background: rgba(245, 245, 242, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    color: var(--title-color);
+    transition: color var(--transition-primary);
+}
+
+.brand-logo:hover {
+    color: var(--accent-color);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+}
+
+.nav-link {
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--desc-color);
+    position: relative;
+    padding: 6px 0;
+    transition: color var(--transition-primary);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background-color: var(--accent-color);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform var(--transition-primary);
+}
+
+.nav-link:hover {
+    color: var(--title-color);
+}
+
+.nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* Call To Action Buttons */
+.cta-button {
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--title-color);
+    padding: 10px 22px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background-color: transparent;
+    transition: border var(--transition-primary), background-color var(--transition-primary), color var(--transition-primary), box-shadow var(--transition-primary);
+}
+
+.cta-button:hover {
+    border-color: var(--accent-color);
+    background-color: var(--accent-color);
+    color: #ffffff;
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* -------------------------------------------------------------
+ * 3. STICKY CANVAS & MAIN VIEWPORT
+ * ------------------------------------------------------------- */
+#scrollytelling-container {
+    position: relative;
+    width: 100%;
+    height: 450vh; /* Controlled scrolling length */
+}
+
+.sticky-viewport {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh; /* dvh for mobile address bar resilience */
+    overflow: hidden;
+    background-color: var(--bg-color);
+}
+
+#scrolly-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    z-index: 1;
+}
+
+/* -------------------------------------------------------------
+ * 4. EDITORIAL SCROLL STORYTELLING BEATS
+ * ------------------------------------------------------------- */
+.story-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none; /* Interactive events bypassed unless target button is clicked */
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: opacity, transform;
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.story-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.panel-inner {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px;
+    pointer-events: auto; /* Enable link clicks on text overlay */
+}
+
+/* Panel Layout Alignments */
+.text-left {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.text-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.text-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Copy Elements & Typography Styling */
+.editorial-label {
+    font-family: var(--font-main);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 16px;
+    opacity: 0.9;
+}
+
+.editorial-title {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 4.5vw, 64px);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--title-color);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.editorial-desc {
+    font-family: var(--font-main);
+    font-size: clamp(16px, 1.2vw, 19px);
+    color: var(--desc-color);
+    line-height: 1.6;
+    max-width: 480px;
+    font-weight: 300;
+}
+
+/* SECTION 4 SPECIFIC - LUXURY REVEAL HERO */
+.hero-brand-title {
+    font-family: var(--font-display);
+    font-size: clamp(60px, 10vw, 120px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--accent-color);
+    margin-bottom: 16px;
+    line-height: 1;
+    text-transform: uppercase;
+    text-indent: 0.18em; /* Centers accurately with letter spacing */
+}
+
+.hero-brand-subtitle {
+    font-family: var(--font-main);
+    font-size: clamp(16px, 1.5vw, 22px);
+    color: var(--title-color);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin-bottom: 40px;
+}
+
+.hero-cta-wrapper {
+    display: flex;
+    gap: 16px;
+}
+
+.hero-cta-btn {
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: var(--accent-color);
+    padding: 16px 36px;
+    border: 1px solid var(--accent-color);
+    border-radius: 30px;
+    box-shadow: 0 4px 30px var(--accent-glow);
+    transition: background-color var(--transition-primary), color var(--transition-primary), border-color var(--transition-primary), box-shadow var(--transition-primary), transform var(--transition-primary);
+}
+
+.hero-cta-btn:hover {
+    background-color: transparent;
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px var(--accent-glow);
+}
+
+/* -------------------------------------------------------------
+ * 5. IMMERSIVE CINEMATIC SCROLL INDICATOR
+ * ------------------------------------------------------------- */
+.scroll-prompt {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity var(--transition-primary);
+}
+
+.scroll-prompt-text {
+    font-family: var(--font-main);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--desc-color);
+    margin-bottom: 12px;
+}
+
+.scroll-prompt-line {
+    width: 1px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-prompt-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background: var(--accent-color);
+    animation: scroll-dot-slide 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* -------------------------------------------------------------
+ * 6. LUXURY EDITORIAL FOOTER
+ * ------------------------------------------------------------- */
+.editorial-footer {
+    position: relative;
+    z-index: 10;
+    background-color: var(--bg-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 100px 80px 40px;
+    max-width: 100%;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+    gap: 40px;
+}
+
+.footer-brand h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent-color);
+    margin-bottom: 16px;
+}
+
+.footer-brand p {
+    font-size: 0.9rem;
+    color: var(--desc-color);
+    max-width: 240px;
+    line-height: 1.5;
+    font-weight: 300;
+}
+
+.footer-links {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-col h4 {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--title-color);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+}
+
+.footer-col a {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--desc-color);
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: color var(--transition-primary);
+    font-weight: 400;
+}
+
+.footer-col a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--desc-color);
+    font-weight: 400;
+}
+
+.footer-credits {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* -------------------------------------------------------------
+ * 7. CORE ANIMATIONS
+ * ------------------------------------------------------------- */
+@keyframes reveal-logo {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in-element {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scroll-dot-slide {
+    0% {
+        top: -16px;
+    }
+    50% {
+        top: 48px;
+    }
+    100% {
+        top: -16px;
+    }
+}
+
+/* -------------------------------------------------------------
+ * 8. RESPONSIVE MEDIA QUERIES
+ * ------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .header-nav, .header-nav.scrolled {
+        padding: 20px 32px;
+    }
+    .panel-inner {
+        padding: 0 40px;
+    }
+    .footer-links {
+        gap: 40px;
+    }
+    .editorial-footer {
+        padding: 80px 40px 30px;
+    }
+}
+
+@media (max-width: 900px) {
+    .header-nav {
+        padding: 16px 24px;
+    }
+    .header-nav.scrolled {
+        padding: 12px 24px;
+    }
+    .nav-menu {
+        display: none; /* Apple-style layout simplification for narrow screens */
+    }
+    .brand-logo {
+        font-size: 1.2rem;
+    }
+    .cta-button {
+        padding: 8px 16px;
+        font-size: 0.75rem;
+    }
+    .panel-inner {
+        padding: 0 24px;
+    }
+    
+    /* Center texts on portrait tablets & mobiles to prevent overlap with the central bottle animation */
+    .story-panel {
+        align-items: flex-end;
+        padding-bottom: 8%;
+    }
+    .panel-inner.text-left, .panel-inner.text-right {
+        text-align: center;
+        align-items: center;
+    }
+    .editorial-title {
+        font-size: clamp(24px, 5vw, 36px);
+        margin-bottom: 16px;
+    }
+    .editorial-desc {
+        font-size: 0.95rem;
+        max-width: 100%;
+    }
+    .hero-brand-title {
+        font-size: clamp(48px, 12vw, 84px);
+        margin-bottom: 12px;
+    }
+    .hero-brand-subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        gap: 48px;
+    }
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 32px;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+}
+
+/* Elite Mobile Landscape Optimization: prevents product collision in short viewports */
+@media (max-height: 480px) and (orientation: landscape) {
+    .story-panel {
+        align-items: center !important;
+        padding-bottom: 0 !important;
+    }
+    
+    /* Pull copy content to left/right margins to frame the central bottle composition */
+    #panel-intro, #panel-reveal {
+        justify-content: flex-start !important;
+    }
+    #panel-flavor {
+        justify-content: flex-end !important;
+    }
+    #panel-hero {
+        justify-content: center !important;
+    }
+    
+    .panel-inner {
+        max-width: 420px !important;
+        padding: 0 48px !important;
+    }
+    
+    .panel-inner.text-left, .panel-inner.text-right {
+        text-align: left !important;
+        align-items: flex-start !important;
+    }
+    
+    .panel-inner.text-right {
+        text-align: right !important;
+        align-items: flex-end !important;
+    }
+
+    .editorial-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 10px !important;
+        line-height: 1.2 !important;
+    }
+    .editorial-desc {
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+    }
+    .editorial-label {
+        margin-bottom: 8px !important;
+    }
+    
+    .hero-brand-title {
+        font-size: 3.5rem !important;
+        margin-bottom: 8px !important;
+    }
+    .hero-brand-subtitle {
+        font-size: 0.9rem !important;
+        margin-bottom: 16px !important;
+    }
+    .hero-cta-btn {
+        padding: 10px 24px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .header-nav {
+        padding: 8px 32px !important;
+    }
+    .brand-logo {
+        font-size: 1.1rem !important;
+    }
+    .cta-button {
+        padding: 6px 14px !important;
+        font-size: 0.7rem !important;
+    }
+    .scroll-prompt {
+        bottom: 16px !important;
+    }
+    .scroll-prompt-line {
+        height: 24px !important;
+    }
+}

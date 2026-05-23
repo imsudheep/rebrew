@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REBREW — Premium Crafted Grape Beverage</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Experience the cinematic journey of REBREW. An ultra-premium, slow-crafted grape beverage. Designed to linger, born from motion.">
+    <meta name="keywords" content="REBREW, premium beverage, grape brew, luxury drinks, Awwwards, scrollytelling, organic, craft beverage">
+    <meta name="author" content="REBREW brand">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="REBREW — Premium Crafted Grape Beverage">
+    <meta property="og:description" content="Cinematic scrollytelling experience of REBREW. Slow-crafted grape beverage designed to linger.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts: Inter (editorial text) and Outfit (premium headlines) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ultra-Premium Loader Overlay -->
+    <div id="preloader" class="preloader-overlay">
+        <div class="preloader-content">
+            <h1 class="preloader-logo">REBREW</h1>
+            <div class="preloader-progress-container">
+                <div class="preloader-progress-track">
+                    <div id="preloader-bar" class="preloader-progress-bar"></div>
+                </div>
+                <div id="preloader-percent" class="preloader-percentage">00%</div>
+            </div>
+            <p class="preloader-tagline">Preparing the cinematic experience</p>
+        </div>
+    </div>
+
+    <!-- Apple-Style Floating Navigation Bar -->
+    <header class="header-nav">
+        <div class="nav-container">
+            <a href="#" class="brand-logo" id="nav-logo">REBREW</a>
+            
+            <nav class="nav-menu">
+                <a href="#story" class="nav-link">Story</a>
+                <a href="#flavor" class="nav-link">Flavor</a>
+                <a href="#crafted" class="nav-link">Crafted</a>
+                <a href="#experience" class="nav-link">Experience</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="#discover" class="cta-button">Discover REBREW</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Master Scrollytelling Scroll Area -->
+    <main id="scrollytelling-container">
+        
+        <!-- Sticky Wrapper containing the Canvas and Absolute Overlays -->
+        <div class="sticky-viewport">
+            
+            <!-- Dynamic Hardware-Accelerated Canvas -->
+            <canvas id="scrolly-canvas"></canvas>
+            
+            <!-- Section Copy Panels (Controlled via Scroll Interpolation) -->
+            
+            <!-- PANEL 1: Intro / Empty Space (0% - 20%) -->
+            <section class="story-panel" id="panel-intro" data-start="0" data-end="20">
+                <div class="panel-inner text-left">
+                    <span class="editorial-label">Introduction</span>
+                    <h2 class="editorial-title">Every bottle begins<br>with a feeling.</h2>
+                    <p class="editorial-desc">Crafted slowly. Designed to linger. An invitation to appreciate the beauty of deliberate patience.</p>
+                </div>
+            </section>
+            
+            <!-- PANEL 2: Flavor Formation (20% - 45%) -->
+            <section class="story-panel" id="panel-flavor" data-start="20" data-end="45">
+                <div class="panel-inner text-right">
+                    <span class="editorial-label">Structure</span>
+                    <h2 class="editorial-title">Flavor takes<br>shape.</h2>
+                    <p class="editorial-desc">Real fruit. Real texture. Real character. Watch the elements align into perfect suspension.</p>
+                </div>
+            </section>
+            
+            <!-- PANEL 3: Product Materialization (45% - 70%) -->
+            <section class="story-panel" id="panel-reveal" data-start="45" data-end="70">
+                <div class="panel-inner text-left">
+                    <span class="editorial-label">Alchemy</span>
+                    <h2 class="editorial-title">Every bottle has<br>its own story.</h2>
+                    <p class="editorial-desc">Handcrafted fruit brew designed for slow moments, wrapping authentic liquid motion around custom architecture.</p>
+                </div>
+            </section>
+            
+            <!-- PANEL 4: Final Hero Composition (70% - 100%) -->
+            <section class="story-panel" id="panel-hero" data-start="70" data-end="100">
+                <div class="panel-inner text-center">
+                    <span class="editorial-label">The Release</span>
+                    <h1 class="hero-brand-title">REBREW</h1>
+                    <p class="hero-brand-subtitle">Timeless flavor, bottled beautifully.</p>
+                    <div class="hero-cta-wrapper">
+                        <a href="#explore" class="hero-cta-btn">Explore the Experience</a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Subtle Cinematic Scroll Indicator (Visible primarily in Section 1) -->
+            <div id="scroll-indicator" class="scroll-prompt">
+                <span class="scroll-prompt-text">Scroll to begin</span>
+                <div class="scroll-prompt-line">
+                    <div class="scroll-prompt-dot"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </main>
+
+    <!-- Luxury Editorial Footer -->
+    <footer class="editorial-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>REBREW</h3>
+                <p>Designed for the conscious palate.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Philosophy</h4>
+                    <a href="#">The Slow Craft</a>
+                    <a href="#">Harvesting Grapes</a>
+                    <a href="#">The Studio</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Collections</h4>
+                    <a href="#">Noble Grape</a>
+                    <a href="#">Royal Splash</a>
+                    <a href="#">Limited Reserve</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal & Inquiries</h4>
+                    <a href="#">Press Kit</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 REBREW Brand. All rights reserved. Crafted by Google DeepMind team.</p>
+            <p class="footer-credits">Awwwards-Level Premium Motion Experience</p>
+        </div>
+    </footer>
+
+    <!-- High-Performance Script Controller -->
+    <script src="app.js"></script>
+</body>
+</html>
