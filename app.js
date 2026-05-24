@@ -21,9 +21,8 @@
         activeFrames.push(END_FRAME);
     }
 
-    const CRITICAL_LOAD_COUNT = 20; // First 20 active frames load immediately to unblock view
+    const CRITICAL_LOAD_COUNT = 208; // Preload all frames for instant scroll response
     const criticalFrames = activeFrames.slice(0, CRITICAL_LOAD_COUNT);
-    const nonCriticalFrames = activeFrames.slice(CRITICAL_LOAD_COUNT);
 
     // Cache to hold successfully loaded and decoded HTMLImageElements
     const loadedImages = {};
@@ -40,6 +39,15 @@
     const preloader = document.getElementById('preloader');
     const preloaderPercent = document.getElementById('preloader-percent');
     const preloaderBar = document.getElementById('preloader-bar');
+    const preloaderTagline = document.getElementById('preloader-tagline');
+    const taglineMessages = [
+        "Harvesting the finest grapes...",
+        "Cold-pressing the essence...",
+        "Aging in stone cellars...",
+        "Bottling the experience...",
+        "Preparing your tasting..."
+    ];
+    let taglineIndex = 0;
     const headerNav = document.querySelector('.header-nav');
     const scrollIndicator = document.getElementById('scroll-indicator');
     const storyPanels = document.querySelectorAll('.story-panel');
@@ -60,13 +68,15 @@
     let cachedCanvasWidth = 0;
     let cachedCanvasHeight = 0;
 
-    // Pad file names to match ezgif-frame-XXX.jpg format
+    // Pad file names to match ezgif-frame-XXX.jpg format using Vite's absolute BASE_URL prefix
     const getFramePath = (idx) => {
-        return `assets/ezgif-frame-${String(idx).padStart(3, '0')}.jpg`;
+        const base = import.meta.env.BASE_URL || '/';
+        return `${base}assets/ezgif-frame-${String(idx).padStart(3, '0')}.jpg`;
     };
 
-    // 2. CRITICAL PRELOAD PIPELINE (Sequential & Dynamic Decoding)
+    // 2. FULL PRELOAD PIPELINE (All frames loaded during loader)
     async function initCriticalPreloader() {
+        document.body.classList.add('loading'); // Force lock screen scroll interactions during preloading
         let loadedCount = 0;
 
         for (const frameId of criticalFrames) {
@@ -99,9 +109,16 @@
         const percent = Math.floor((loaded / total) * 100);
         preloaderPercent.textContent = `${String(percent).padStart(2, '0')}%`;
         preloaderBar.style.width = `${percent}%`;
+
+        const msgIndex = Math.min(taglineMessages.length - 1, Math.floor((loaded / total) * taglineMessages.length));
+        if (msgIndex !== taglineIndex) {
+            taglineIndex = msgIndex;
+            preloaderTagline.textContent = taglineMessages[taglineIndex];
+        }
     }
 
     function completePreloader() {
+        document.body.classList.remove('loading'); // Unpin scrolling interactions once critical frames are in memory
         preloader.classList.add('fade-out');
         setTimeout(() => {
             preloader.style.display = 'none';
@@ -114,54 +131,11 @@
         // Start continuous loop
         requestAnimationFrame(renderLoop);
 
-        // Begin background streaming using browser idle slots
-        initProgressiveBackgroundLoader();
-
         // Initialize scroll reveal triggers for lower editorial sections
         initScrollReveal();
     }
 
-    // 3. PROGRESSIVE IDLE BACKGROUND LOADER
-    function initProgressiveBackgroundLoader() {
-        let currentIndex = 0;
-        const idleScheduler = window.requestIdleCallback || ((cb) => setTimeout(cb, 50));
-
-        function loadNextNonCritical() {
-            if (currentIndex >= nonCriticalFrames.length) {
-                console.log("REBREW Cinematic Sequence: Progressive streaming complete.");
-                return;
-            }
-
-            const frameId = nonCriticalFrames[currentIndex];
-
-            // Request next idle opportunity from browser main thread
-            idleScheduler(async (deadline) => {
-                try {
-                    const img = new Image();
-                    img.src = getFramePath(frameId);
-
-                    await new Promise((resolve) => {
-                        img.onload = () => resolve();
-                        img.onerror = () => resolve(); // Keep pipeline moving even on failure
-                    });
-
-                    // Decode off-thread
-                    await img.decode();
-                    loadedImages[frameId] = img;
-                    fallbackCache = {}; // Invalidate fallback cache on new load
-                } catch (err) {
-                    // Fail silently, nearest fallback scanner will cover failures
-                }
-
-                currentIndex++;
-                loadNextNonCritical();
-            });
-        }
-
-        loadNextNonCritical();
-    }
-
-    // 4. NEAREST LOADED FRAME FALLBACK SEARCHER
+    // 3. NEAREST LOADED FRAME FALLBACK SEARCHER
     function getNearestDecodedFrame(targetId) {
         if (loadedImages[targetId]) return loadedImages[targetId];
         if (fallbackCache[targetId]) return fallbackCache[targetId];
@@ -193,7 +167,7 @@
         return null;
     }
 
-    // 5. MATH ENGINE: ASPECT COVER LOGIC (Simulates css 'background-size: cover')
+    // 4. MATH ENGINE: ASPECT COVER LOGIC (Simulates css 'background-size: cover')
     function renderFrameToCanvas(img) {
         if (!img) return;
 
@@ -228,7 +202,7 @@
         ctx.drawImage(offscreenCanvas, 0, 0);
     }
 
-    // 6. DEBOUNCED RESIZE SYNCHRONIZATION
+    // 5. DEBOUNCED RESIZE SYNCHRONIZATION
     let resizeDebounceTimer;
     function resizeCanvas() {
         const rect = canvas.parentNode.getBoundingClientRect();
@@ -270,7 +244,7 @@
         }, 100);
     });
 
-    // 7. SCROLL SYNCHRONIZED INTERPOLATION LOOP
+    // 6. SCROLL SYNCHRONIZED INTERPOLATION LOOP
     function updateScrollState() {
         const scrollY = window.scrollY;
         const maxHeroScroll = heroContainer.offsetHeight - window.innerHeight;
@@ -286,6 +260,13 @@
             headerNav.classList.add('scrolled');
         } else {
             headerNav.classList.remove('scrolled');
+        }
+
+        // Show navbar only when past the hero section, hide when back inside it
+        if (targetScrollProgress >= 1) {
+            headerNav.classList.add('visible');
+        } else {
+            headerNav.classList.remove('visible');
         }
 
         // Fade scroll prompt line
@@ -344,7 +325,7 @@
         }
     }
 
-    // 8. LUXURY MOTION DESIGN: TEXT ORCHESTRATION BEATS
+    // 7. LUXURY MOTION DESIGN: TEXT ORCHESTRATION BEATS
     function orchestrateEditorialText() {
         const pct = currentScrollProgress * 100; // Float percent (0.0 to 100.0)
 
@@ -389,7 +370,7 @@
         });
     }
 
-    // 9. HIGH-PERFORMANCE INTERSECTIONOBSERVER SCROLL-REVEAL ENGINE
+    // 8. HIGH-PERFORMANCE INTERSECTIONOBSERVER SCROLL-REVEAL ENGINE
     function initScrollReveal() {
         const revealElements = document.querySelectorAll('.reveal-up');
         
@@ -410,6 +391,35 @@
 
         revealElements.forEach(el => observer.observe(el));
     }
+
+    // 9. SMOOTH SCROLL & HAMBURGER MENU
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('open');
+    });
+
+    function smoothScrollTo(targetId) {
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        const headerOffset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            smoothScrollTo(href);
+
+            // Close mobile menu after selecting a link
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('open');
+        });
+    });
 
     // Initialize Core Process
     initCriticalPreloader();

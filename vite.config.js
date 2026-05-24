@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  base: './' // Ensures assets load correctly relative to the subfolder hosting (/rebrew/) on GitHub Pages
+export default defineConfig(({ command }) => {
+  return {
+    // Dynamic Base Path: '/' for local development, '/rebrew/' for GitHub Pages production
+    base: command === 'build' ? '/rebrew/' : '/'
+  };
 });

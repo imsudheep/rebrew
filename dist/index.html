@@ -21,8 +21,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Core Stylesheet -->
-  <script type="module" crossorigin src="./assets/index-D18EVhVj.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Dp1nSGgx.css">
+  <script type="module" crossorigin src="/rebrew/assets/index-Bh5y9HAy.js"></script>
+  <link rel="stylesheet" crossorigin href="/rebrew/assets/index-BKN0xI0R.css">
 </head>
 <body>
 
@@ -36,25 +36,30 @@
                 </div>
                 <div id="preloader-percent" class="preloader-percentage">00%</div>
             </div>
-            <p class="preloader-tagline">Preparing the cinematic experience</p>
+            <div class="preloader-tagline-wrapper">
+                <p class="preloader-tagline" id="preloader-tagline">Harvesting the finest grapes...</p>
+            </div>
         </div>
     </div>
 
     <!-- Apple-Style Floating Navigation Bar -->
     <header class="header-nav">
         <div class="nav-container">
-            <a href="#" class="brand-logo" id="nav-logo">REBREW</a>
+            <a href="#" class="brand-logo" id="nav-logo">
+                <img src="logo.jpg" alt="REBREW" class="brand-logo-img">
+            </a>
             
-            <nav class="nav-menu">
-                <a href="#hero-scrollytelling" class="nav-link">Reveal</a>
+            <nav class="nav-menu" id="nav-menu">
                 <a href="#flavors" class="nav-link">Flavors</a>
                 <a href="#crafted" class="nav-link">Crafted</a>
                 <a href="#experience" class="nav-link">Experience</a>
             </nav>
             
-            <div class="nav-actions">
-                <a href="#discover" class="cta-button">Discover REBREW</a>
-            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -91,6 +96,13 @@
         
     </main>
 
+    <!-- Premium Section Divider -->
+    <div class="section-divider">
+        <span class="divider-dot"></span>
+        <span class="divider-line"></span>
+        <span class="divider-dot"></span>
+    </div>
+
     <!-- Section 2: The Flavor Gallery (Interactive Glassmorphic Grid Showroom) -->
     <section id="flavors" class="reveal-section">
         <div class="section-container">
@@ -104,10 +116,12 @@
                 
                 <!-- CARD 1: Noble Grape -->
                 <div class="flavor-card reveal-up" id="card-noble">
+                    <div class="card-accent-bar"></div>
                     <div class="card-glass-glow"></div>
                     <div class="card-content">
-                        <span class="flavor-type-badge type-noble">Noble Grape</span>
-                        <h3 class="flavor-card-title">Classic Velvet</h3>
+                        <span class="flavor-type-badge type-noble">Premium</span>
+                        <h3 class="flavor-card-title">Noble Grape</h3>
+                        <p class="flavor-card-subtitle">Classic Velvet</p>
                         <p class="flavor-card-desc">Dark plum, sweet black cherry, and a subtle undertone of toasted oak. Bold, heavy, and structured.</p>
                         
                         <div class="flavor-card-divider"></div>
@@ -117,16 +131,18 @@
                             <li><span>Body</span><strong>Full & Rich</strong></li>
                         </ul>
                         
-                        <a href="#explore-noble" class="card-cta-btn">Explore Profile</a>
+                        <a href="#explore-noble" class="card-cta-btn">Explore Profile <span class="cta-arrow">→</span></a>
                     </div>
                 </div>
                 
                 <!-- CARD 2: Royal Splash -->
                 <div class="flavor-card reveal-up" id="card-royal">
+                    <div class="card-accent-bar"></div>
                     <div class="card-glass-glow"></div>
                     <div class="card-content">
-                        <span class="flavor-type-badge type-royal">Royal Splash</span>
-                        <h3 class="flavor-card-title">Effervescent Zest</h3>
+                        <span class="flavor-type-badge type-royal">Sparkling</span>
+                        <h3 class="flavor-card-title">Royal Splash</h3>
+                        <p class="flavor-card-subtitle">Effervescent Zest</p>
                         <p class="flavor-card-desc">Vibrant white grape, carbonated citrus oil, and cooling botanical extracts. Crisp, light, and refreshing.</p>
                         
                         <div class="flavor-card-divider"></div>
@@ -136,16 +152,18 @@
                             <li><span>Body</span><strong>Effervescent</strong></li>
                         </ul>
                         
-                        <a href="#explore-royal" class="card-cta-btn">Explore Profile</a>
+                        <a href="#explore-royal" class="card-cta-btn">Explore Profile <span class="cta-arrow">→</span></a>
                     </div>
                 </div>
                 
                 <!-- CARD 3: Limited Reserve -->
                 <div class="flavor-card reveal-up" id="card-reserve">
+                    <div class="card-accent-bar"></div>
                     <div class="card-glass-glow"></div>
                     <div class="card-content">
-                        <span class="flavor-type-badge type-reserve">Limited Reserve</span>
-                        <h3 class="flavor-card-title">Oak Infusion</h3>
+                        <span class="flavor-type-badge type-reserve">Reserve</span>
+                        <h3 class="flavor-card-title">Limited Reserve</h3>
+                        <p class="flavor-card-subtitle">Oak Infusion</p>
                         <p class="flavor-card-desc">Charred oak cask aged, notes of wild elderberry, dark cacao nibs, and smooth leather. Rich and meditative.</p>
                         
                         <div class="flavor-card-divider"></div>
@@ -155,13 +173,20 @@
                             <li><span>Body</span><strong>Intense Depth</strong></li>
                         </ul>
                         
-                        <a href="#explore-reserve" class="card-cta-btn">Explore Profile</a>
+                        <a href="#explore-reserve" class="card-cta-btn">Explore Profile <span class="cta-arrow">→</span></a>
                     </div>
                 </div>
                 
             </div>
         </div>
     </section>
+
+    <!-- Premium Section Divider -->
+    <div class="section-divider">
+        <span class="divider-dot"></span>
+        <span class="divider-line"></span>
+        <span class="divider-dot"></span>
+    </div>
 
     <!-- Section 3: The "Crafted Slowly" Story (Asymmetrical Modern Split-Column) -->
     <section id="crafted" class="reveal-section">
@@ -172,7 +197,7 @@
                 <div class="crafted-visual-collage reveal-up">
                     <div class="collage-backplane"></div>
                     <div class="collage-plate plate-main">
-                        <div class="plate-inner-badge">COLD PRESS</div>
+                        <img src="./crafted-bottle.jpg" alt="Crafted bottle" class="crafted-image">
                     </div>
                     <div class="collage-plate plate-secondary">
                         <div class="plate-inner-glow"></div>
@@ -183,6 +208,7 @@
                 <!-- Right: Editorial Narrative Content -->
                 <div class="crafted-text-content reveal-up">
                     <span class="section-subtitle-badge">The Slow Method</span>
+                    <div class="crafted-quote-mark">"</div>
                     <h2 class="editorial-crafted-title">Deliberate patience<br>in every drop.</h2>
                     <p class="editorial-crafted-desc">We do not rush. Every organic grape is hand-harvested at the exact peak of autumn maturity, then cold-pressed within hours to preserve its rich cellular structure.</p>
                     <p class="editorial-crafted-desc">Our slow cold-brewing process takes twelve full months, allowing the flavor notes to marry naturally in cool stone cellars without chemical preservatives or synthetic additives.</p>
@@ -195,12 +221,12 @@
                         </div>
                         <div class="stat-divider"></div>
                         <div class="stat-item">
-                            <strong>12 Mo</strong>
-                            <span>Slow Cask Aged</span>
+                            <strong data-count="12">12</strong>
+                            <span>Months Aged</span>
                         </div>
                         <div class="stat-divider"></div>
                         <div class="stat-item">
-                            <strong>Zero</strong>
+                            <strong>0</strong>
                             <span>Synthetic Additives</span>
                         </div>
                     </div>
@@ -209,6 +235,13 @@
             </div>
         </div>
     </section>
+
+    <!-- Premium Section Divider -->
+    <div class="section-divider">
+        <span class="divider-dot"></span>
+        <span class="divider-line"></span>
+        <span class="divider-dot"></span>
+    </div>
 
     <!-- Section 4: Fullscreen Radially Gradient CTA Experience Banner -->
     <section id="experience" class="reveal-section text-center">
@@ -226,7 +259,7 @@
     <footer class="editorial-footer">
         <div class="footer-container">
             <div class="footer-brand">
-                <h3>REBREW</h3>
+                <img src="logo.jpg" alt="REBREW" class="footer-logo-img">
                 <p>Designed for the conscious palate.</p>
             </div>
             <div class="footer-links">
@@ -251,8 +284,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 REBREW Brand. All rights reserved. Crafted by Google DeepMind team.</p>
-            <p class="footer-credits">Awwwards-Level Premium Motion Experience</p>
+            <p>&copy; 2026 REBREW Brand. All rights reserved.</p>
         </div>
     </footer>
 
